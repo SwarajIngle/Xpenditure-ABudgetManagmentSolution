@@ -89,8 +89,8 @@ public class HomeFragment extends Fragment {
         pieChart.getDescription().setEnabled(false);
         pieChart.setExtraOffsets(5, 10, 5, 5);
         pieChart.getLegend().setEnabled(false);
-
-        pieChart.setDragDecelerationFrictionCoef(0.95f);
+        pieChart.setDragDecelerationEnabled(false);
+//        pieChart.setDragDecelerationFrictionCoef(0.95f);
         pieChart.setDrawHoleEnabled(true);
         pieChart.setHoleRadius(35f);
         pieChart.setHoleColor(Color.WHITE);

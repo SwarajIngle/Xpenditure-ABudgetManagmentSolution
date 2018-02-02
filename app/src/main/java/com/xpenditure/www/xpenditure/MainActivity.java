@@ -1,5 +1,7 @@
 package com.xpenditure.www.xpenditure;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -10,6 +12,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.appindexing.Thing;
+import com.google.android.gms.common.api.GoogleApiClient;
+
 import static com.xpenditure.www.xpenditure.R.id.calender;
 
 public class MainActivity extends AppCompatActivity {
@@ -19,6 +26,11 @@ public class MainActivity extends AppCompatActivity {
     Toolbar toolbar;
     FragmentTransaction fragmentTransaction;
     NavigationView navigationView;
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,15 +50,14 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.add(R.id.frameLayout, new HomeFragment());
         fragmentTransaction.commit();
         getSupportActionBar().setTitle("Xpenditure");
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener(){
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
 
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId())
-                {
+                switch (item.getItemId()) {
                     case R.id.home:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new HomeFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new HomeFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Xpenditure");
                         item.setChecked(true);
@@ -55,7 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
                     case R.id.month:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new MonthFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new MonthFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Monthly");
                         item.setChecked(true);
@@ -63,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.year:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new YearFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new YearFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Yearly");
                         item.setChecked(true);
@@ -71,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.categories:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new CategoriesFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new CategoriesFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Choose Catagories");
                         item.setChecked(true);
@@ -79,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.goals:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new GoalsFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new GoalsFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Set Goals");
                         item.setChecked(true);
@@ -87,23 +98,20 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case calender:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new CalenderFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new CalenderFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Calender");
                         item.setChecked(true);
                         drawerLayout.closeDrawers();
                         break;
                     case R.id.reminder:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new ReminderFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Set Reminders");
+
+                        startActivity(new Intent(MainActivity.this, ReminderFragment.class));
                         item.setChecked(true);
                         drawerLayout.closeDrawers();
-                        break;
                     case R.id.account:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new LoginFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new LoginFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Accounts");
                         item.setChecked(true);
@@ -111,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.settings:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout , new SettingFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new SettingFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Settings");
                         item.setChecked(true);
@@ -120,16 +128,14 @@ public class MainActivity extends AppCompatActivity {
                 }
 
 
-
-
                 return true;
             }
         });
 
 
-
-
-
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -138,5 +144,41 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    public Action getIndexApiAction() {
+        Thing object = new Thing.Builder()
+                .setName("Main Page") // TODO: Define a title for the content shown.
+                // TODO: Make sure this auto-generated URL is correct.
+                .setUrl(Uri.parse("http://[ENTER-YOUR-URL-HERE]"))
+                .build();
+        return new Action.Builder(Action.TYPE_VIEW)
+                .setObject(object)
+                .setActionStatus(Action.STATUS_TYPE_COMPLETED)
+                .build();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        AppIndex.AppIndexApi.start(client, getIndexApiAction());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        AppIndex.AppIndexApi.end(client, getIndexApiAction());
+        client.disconnect();
     }
 }
