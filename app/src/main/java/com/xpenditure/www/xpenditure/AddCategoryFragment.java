@@ -162,9 +162,12 @@ public class AddCategoryFragment extends Fragment implements View.OnClickListene
                             int count = countManager.returnCategoryCount();
                             Uri downloaduri = taskSnapshot.getDownloadUrl();
                             String imageuri = downloaduri.toString().trim();
+                            int Expenses = 0;
                             DatabaseReference currentCategory = databaseReference.child("Category" + count);
                             currentCategory.child("Title").setValue(name);
                             currentCategory.child("Image").setValue(imageuri);
+                            currentCategory.child("Expenses").setValue(Expenses);
+
                             count++;
                             countManager.setCountCategories( count );
                         }

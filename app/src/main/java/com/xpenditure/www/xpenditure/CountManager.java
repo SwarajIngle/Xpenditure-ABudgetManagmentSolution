@@ -26,16 +26,15 @@ public class CountManager {
     public static int countExpenses;
 
     CountManager() {
-       
+
     }
 
 
-
-    public void getCountCategories(int countCategories) {
+    public static void getCountCategories(int countCategories) {
         countCat = countCategories;
     }
 
-    public int returnCategoryCount(){
+    public static int returnCategoryCount() {
         return countCat;
     }
 
@@ -52,9 +51,11 @@ public class CountManager {
         currentuser.child("Category Count").setValue(catCount);
     }
 
-    public  void setCountExpenses(int countExpenses) {
+    public void setCountExpenses(int countExpenses) {
 
     }
+
+
 
 
 }

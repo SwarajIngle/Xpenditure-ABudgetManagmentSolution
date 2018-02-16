@@ -84,7 +84,7 @@ public class MainActivity extends AppCompatActivity {
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frameLayout, new CategoriesFragment());
                         fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Choose Catagories");
+                        getSupportActionBar().setTitle("Catagories");
                         item.setChecked(true);
                         drawerLayout.closeDrawers();
                         break;

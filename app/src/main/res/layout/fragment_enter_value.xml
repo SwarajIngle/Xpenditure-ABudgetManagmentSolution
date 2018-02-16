@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:background="@color/background"
+    tools:context="com.xpenditure.www.xpenditure.EnterValueFragment">
+
+
+    <TextView
+        android:id="@+id/Category_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="11dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="48dp"
+        android:text="Selected Category:"
+        android:textSize="25dp" />
+
+    <TextView
+        android:id="@+id/selected_category"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/Category_text"
+        android:layout_marginLeft="12dp"
+        android:layout_marginStart="12dp"
+        android:layout_toEndOf="@+id/Category_text"
+        android:layout_toRightOf="@+id/Category_text"
+        android:textSize="15dp" />
+
+    <TextView
+        android:id="@+id/value_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Category_text"
+        android:layout_alignStart="@+id/Category_text"
+        android:layout_below="@+id/selected_category"
+        android:layout_marginTop="69dp"
+        android:text="Enter Value:"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/Value_edit"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/value_text"
+        android:layout_alignBottom="@+id/value_text"
+        android:layout_toEndOf="@+id/Category_text"
+        android:layout_toRightOf="@+id/Category_text"
+        android:inputType="number"
+        android:textSize="15dp" />
+
+
+    <TextView
+        android:id="@+id/Note_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/value_text"
+        android:layout_alignStart="@+id/value_text"
+        android:layout_below="@+id/Value_edit"
+        android:layout_marginTop="67dp"
+        android:text="Notes:"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/Notes_edit"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/Note_text"
+        android:layout_alignBottom="@+id/Note_text"
+        android:layout_alignLeft="@+id/Value_edit"
+        android:layout_alignStart="@+id/Value_edit" />
+
+    <Button
+        android:id="@+id/button_spent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_below="@id/Note_text"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:background="@color/red"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Spent" />
+</RelativeLayout>

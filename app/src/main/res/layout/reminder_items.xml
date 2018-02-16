@@ -6,6 +6,7 @@
     android:background="?android:attr/selectableItemBackground"
     android:layout_height="86dp"
     android:elevation="18dp"
+
     >
 
     <ImageView android:layout_width="40dp"

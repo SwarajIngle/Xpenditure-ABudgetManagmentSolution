@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
+    android:background="@color/background"
     tools:context="com.xpenditure.www.xpenditure.CategoriesFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -36,9 +36,12 @@
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add category"
+        android:text="Add New Category"
         android:layout_marginTop="15dp"
-        android:id="@+id/Add_category"/>
+        android:id="@+id/Add_category"
+        android:background="@color/colorAccent"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
     </RelativeLayout>
 

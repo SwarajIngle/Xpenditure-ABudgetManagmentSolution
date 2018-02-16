@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background"
     tools:context="com.xpenditure.www.xpenditure.AddCategoryFragment">
 
 
@@ -30,10 +31,10 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_below="@id/headercat"
+            android:layout_marginTop="20dp"
             android:padding="10dp"
             android:scaleType="centerCrop"
-            app:srcCompat="@android:drawable/ic_menu_edit"
-            android:layout_marginTop="20dp"/>
+            app:srcCompat="@android:drawable/ic_menu_edit" />
 
         <TextView
 
@@ -41,7 +42,10 @@
             android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/categoryImage"
+            android:background="#CCFF0000"
             android:text="Choose Image"
+            android:backgroundTintMode="screen"
+            android:textColor="@color/white"
             android:textAlignment="center"
             android:textSize="20sp" />
 
@@ -52,8 +56,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/categoryImage"
             android:layout_marginTop="25dp"
-            android:inputType="text"
-            android:hint=" Enter Category Name"/>
+            android:hint=" Enter Category Name"
+            android:inputType="text" />
 
 
         <Button
@@ -62,8 +66,10 @@
             android:layout_height="60dp"
             android:layout_below="@id/category_name"
             android:layout_marginTop="50dp"
+            android:background="@color/colorAccent"
             android:text="Add Category"
-            android:textColor="@color/common_google_signin_btn_text_dark_pressed" />
+            android:textColor="@color/white"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

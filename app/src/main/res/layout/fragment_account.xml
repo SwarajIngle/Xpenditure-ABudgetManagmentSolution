@@ -4,84 +4,94 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_centerInParent="true"
+    android:background="@color/background"
     tools:context="com.xpenditure.www.xpenditure.AccountFragment">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="10dp"
+        android:layout_height="match_parent">
 
-        >
-
-
-        <ImageView
-            android:id="@+id/profileImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:layout_marginBottom="5dp"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
             android:padding="10dp"
-            android:scaleType="centerCrop"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
 
-        <Button
-            android:id="@+id/ChangeDP"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/profileImage"
-            android:background="@color/colorAccent"
-            android:text="Edit Profile Picture"
-            android:textAlignment="center"
-            android:textSize="15dp"
-            android:textStyle="normal"
-            android:layout_alignLeft="@id/profileImage"
-            />
-
-        <TextView
-            android:id="@+id/viewEmailId"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/ChangeDP"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="Email"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/viewFname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewEmailId"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="First Name"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/viewLname"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewFname"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:text="Last Name"
-            android:textSize="20dp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/buttonlogout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/viewLname"
-            android:layout_margin="30dp"
-            android:background="@color/colorPrimary"
-            android:text="Sign Out"
-            android:textAlignment="center" />
+            >
 
 
-    </RelativeLayout>
+            <ImageView
+                android:layout_marginLeft="15dp"
+                android:id="@+id/profileImage"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                android:layout_marginBottom="5dp"
+                android:padding="10dp"
+                android:scaleType="centerCrop"
+                app:srcCompat="@android:drawable/ic_menu_camera" />
+
+            <Button
+                android:id="@+id/ChangeDP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/profileImage"
+                android:padding="15dp"
+                android:layout_below="@id/profileImage"
+                android:background="@color/colorAccent"
+                android:text="Choose Picture"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:textStyle="normal"
+                android:layout_marginLeft="15dp"
+                />
+
+            <TextView
+                android:id="@+id/viewEmailId"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ChangeDP"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:text="Email"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/viewFname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewEmailId"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:text="First Name"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/viewLname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewFname"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:text="Last Name"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/buttonlogout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/viewLname"
+                android:layout_margin="30dp"
+                android:background="@color/red"
+                android:text="Sign Out"
+                android:textAlignment="center"
+                android:textColor="@color/white" />
 
 
+        </RelativeLayout>
+
+    </ScrollView>
 </FrameLayout>

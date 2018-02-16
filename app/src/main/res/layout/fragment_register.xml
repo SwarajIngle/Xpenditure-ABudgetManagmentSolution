@@ -4,6 +4,7 @@
     android:layout_height="match_parent"
     android:layout_centerInParent="true"
     android:scrollbarAlwaysDrawVerticalTrack="true"
+    android:background="@color/background"
     tools:context="com.xpenditure.www.xpenditure.AccountFragment">
 
     <LinearLayout
@@ -117,6 +118,7 @@
         <TextView
             android:id="@+id/loginText"
             android:layout_width="match_parent"
+            android:textColor="@color/colorAccent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:text="Dont have a account??  Sign In"
