@@ -113,31 +113,24 @@ public class EnterValueFragment extends Fragment {
                 mref3.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for(DataSnapshot data: dataSnapshot.getChildren()){
-                            if(data.child(Date).exists()){
-                                final DatabaseReference dateReference = FirebaseDatabase.getInstance().getReference().child("users/"+uid+"/Category/"+title+"/"+Date);
-                                for(DataSnapshot dataSnapshot1: dataSnapshot.getChildren()){
-                                    if(dataSnapshot1.child(time).exists()){
-                                        final  DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("users/"+uid+"/Category/"+title+"/"+Date+"/"+time);
+                        for(DataSnapshot data: dataSnapshot.getChildren()) {
+                            if (data.child(Date).exists()) {
+                                final DatabaseReference dateReference = FirebaseDatabase.getInstance().getReference().child("users/" + uid + "/Category/" + title + "/" + Date);
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    if (dataSnapshot1.child(time).exists()) {
+                                        final DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("users/" + uid + "/Category/" + title + "/" + Date + "/" + time);
                                         dref.child("Amount:").setValue(Entered);
                                         dref.child("Notes:").setValue(note);
                                         break;
                                     }
                                 }
                                 break;
-                            }
-                            else {
+                            } else {
                                 DatabaseReference entry = databaseReference.child(Date);
                                 entry.child(time);
-                                final  DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("users/"+uid+"/Category/"+title+"/"+Date+"/"+time);
+                                final DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("users/" + uid + "/Category/" + title + "/" + Date + "/" + time);
                                 dref.child("Amount:").setValue(Entered);
                                 dref.child("Notes:").setValue(note);
-                                Toast.makeText(EnterValueFragment.this.getActivity(),"Successfully added the Record", Toast.LENGTH_SHORT).show();
-                                HomeFragment homeFragment = new HomeFragment();
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.frameLayout, homeFragment);
-                                fragmentTransaction.commit();
                             }
                         }
                     }
@@ -148,11 +141,16 @@ public class EnterValueFragment extends Fragment {
                     }
                 });
 
+                Toast.makeText(EnterValueFragment.this.getActivity(),"Successfully added the Record", Toast.LENGTH_SHORT).show();
+                HomeFragment homeFragment = new HomeFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, homeFragment);
+                fragmentTransaction.commit();
+
             }
 
         });
-
-
 
         return rootView;
     }
