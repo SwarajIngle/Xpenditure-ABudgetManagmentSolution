@@ -11,35 +11,36 @@
         android:padding="16dp">
 
         <TextView
-            android:id="@+id/enter_goal"
+            android:id="@+id/goal_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter Goal Amount:"
+            android:text="Goal Amount:"
             android:layout_marginTop="140dp"
             android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold"
             android:textColor="@color/colorPrimary"/>
 
-        <EditText
-            android:id="@+id/goals"
+        <TextView
+            android:id="@+id/display_goals"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/enter_goal"
-            android:layout_marginTop="16dp"
-            android:inputType="number"
+            android:text="Amount"
+            android:layout_marginTop="20dp"
             android:textAlignment="center"
-            android:textSize="20dp"/>
+            android:textSize="30sp"
+            android:textColor="@color/colorPrimary"
+            android:layout_below="@id/goal_amount"/>
 
         <Button
             android:id="@+id/updateGoalsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/goals"
+            android:layout_below="@id/display_goals"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             android:background="@color/colorPrimary"
-            android:text="Set Goals"
+            android:text="Update Goals"
             android:textColor="@color/white" />
 
     </RelativeLayout>

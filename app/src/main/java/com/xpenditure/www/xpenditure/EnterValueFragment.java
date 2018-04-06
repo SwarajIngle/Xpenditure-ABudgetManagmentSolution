@@ -35,11 +35,13 @@ public class EnterValueFragment extends Fragment {
     String note;
     int Value;
     int Expenses;
+    Integer goals;
     String Entered;
     Firebase mref;
     Firebase mref1;
     Firebase mref2;
     Firebase mref3;
+    Firebase mrefgoals;
     Button Spent;
     Integer total;
     String Date;
@@ -62,6 +64,7 @@ public class EnterValueFragment extends Fragment {
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         uid = user.getUid();
         mref1 = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Total");
+        mrefgoals = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Goals");
         mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Category/"+title+"/Title");
         mref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -104,6 +107,21 @@ public class EnterValueFragment extends Fragment {
                 Value = Integer.parseInt(Entered);
                 note = Notes.getText().toString().trim();
                 total=total-Value;
+                mrefgoals.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        goals = dataSnapshot.getValue(Integer.class);
+                        if (total < goals){
+                            Toast.makeText(EnterValueFragment.this.getActivity(),"Goals Amount Exceded!!", Toast.LENGTH_LONG).show();
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
                 mref1.setValue(total);
                 Expenses++;
                 mref2.setValue(Expenses);
@@ -132,12 +150,8 @@ public class EnterValueFragment extends Fragment {
                                 final  DatabaseReference dref = FirebaseDatabase.getInstance().getReference().child("users/"+uid+"/Category/"+title+"/"+Date+"/"+time);
                                 dref.child("Amount:").setValue(Entered);
                                 dref.child("Notes:").setValue(note);
-                                Toast.makeText(EnterValueFragment.this.getActivity(),"Successfully added the Record", Toast.LENGTH_SHORT).show();
-                                HomeFragment homeFragment = new HomeFragment();
-                                FragmentManager fragmentManager = getFragmentManager();
-                                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                fragmentTransaction.replace(R.id.frameLayout, homeFragment);
-                                fragmentTransaction.commit();
+
+
                             }
                         }
                     }
@@ -147,6 +161,13 @@ public class EnterValueFragment extends Fragment {
 
                     }
                 });
+
+                Toast.makeText(EnterValueFragment.this.getActivity(),"Transaction Complete", Toast.LENGTH_SHORT).show();
+                HomeFragment homeFragment = new HomeFragment();
+                FragmentManager fragmentManager = getFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.replace(R.id.frameLayout, homeFragment);
+                fragmentTransaction.commit();
 
             }
 

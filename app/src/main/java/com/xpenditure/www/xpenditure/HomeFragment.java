@@ -102,14 +102,13 @@ public class HomeFragment extends Fragment {
 
                             user = FirebaseAuth.getInstance().getCurrentUser();
                             String uid = user.getUid();
-                            firebase = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid);
+                            firebase = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid);
 
                             firebase.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Map<Integer, Integer> map = dataSnapshot.getValue(Map.class);
                                     int countCat = map.get("Category Count");
-
 
                                     Log.v("E_VALUE", "Category Count " + countCat);
 
@@ -190,7 +189,7 @@ public class HomeFragment extends Fragment {
                             int categoryCount = countCategory();
                             final ArrayList<PieEntry> yValues = new ArrayList<>();
                             for (int i = 0; i < categoryCount; i++) {
-                                mrefcategory = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Category/Category" + i);
+                                mrefcategory = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Category/Category"+i);
                                 mrefcategory.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -205,7 +204,7 @@ public class HomeFragment extends Fragment {
                                             yValues.add(new PieEntry(15f, Title));
                                             Log.d(TAG, "Title is: " + Title);
                                             pieChart.animateY(5000, Easing.EasingOption.EaseInOutBack);
-//                        pieChart.animateX(5000, Easing.EasingOption.EaseInBounce);
+//                                          pieChart.animateX(5000, Easing.EasingOption.EaseInBounce);
 
                                             PieDataSet dataSet = new PieDataSet(yValues, "Titles");
                                             dataSet.setSliceSpace(3f);
@@ -241,7 +240,7 @@ public class HomeFragment extends Fragment {
 //        Log.v("E_VALUE", "Title: " + yValues);
 
 
-                            mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Total");
+                            mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Total");
 
                             mref.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -293,7 +292,6 @@ public class HomeFragment extends Fragment {
                             FragmentManager fragmentManager = getFragmentManager();
                             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                             fragmentTransaction.replace(R.id.frameLayout, loginFragment);
-//                    fragmentTransaction.addToBackStack(null);
                             fragmentTransaction.commit();
                             ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Login");
 

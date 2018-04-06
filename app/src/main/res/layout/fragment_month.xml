@@ -5,10 +5,35 @@
     android:background="@color/background"
     tools:context="com.xpenditure.www.xpenditure.MonthFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@id/add_reminder_layout_top">
 
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/datePicker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Select Month and Year"
+                android:textSize="25dp"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:padding="16dp"/>
+
+            <com.github.mikephil.charting.charts.HorizontalBarChart
+                android:id="@+id/barChart"
+                android:layout_below="@id/datePicker"
+                android:layout_width="match_parent"
+                android:layout_height="450dp"
+                android:layout_marginTop="50dp"
+                android:padding="15dp">
+
+            </com.github.mikephil.charting.charts.HorizontalBarChart>
+
+        </RelativeLayout>
+    </ScrollView>
 </FrameLayout>

@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.goals:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout, new GoalsFragment());
+                        fragmentTransaction.replace(R.id.frameLayout, new DisplayGoalsFragment());
                         fragmentTransaction.commit();
                         getSupportActionBar().setTitle("Set Goals");
                         item.setChecked(true);

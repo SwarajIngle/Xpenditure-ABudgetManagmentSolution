@@ -214,6 +214,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
                     currentUser.child("Total").setValue(0);
                     currentUser.child("Category Count").setValue(CategoryCount);
                     currentUser.child("Expense Count").setValue(ExpensesCount);
+                    currentUser.child("Goals").setValue(0);
                    Toast.makeText(RegisterFragment.this.getActivity(),"Information Saved!!",Toast.LENGTH_LONG).show();
 
 
