@@ -1,8 +1,12 @@
+
+
+
+
 apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 25
-    //buildToolsVersion "25.0.0"
+   buildToolsVersion "25.0.0"
     defaultConfig {
         applicationId "com.xpenditure.www.xpenditure"
         minSdkVersion 16
@@ -28,12 +32,16 @@ android {
 
     }
 }
+
+
+
 repositories {
     maven { url "https://jitpack.io" }
 
 }
 
 dependencies {
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
@@ -54,6 +62,7 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.getbase:floatingactionbutton:1.9.0'
     compile 'com.wdullaer:materialdatetimepicker:1.2.1'
+    compile 'com.bignerdranch.android:recyclerview-multiselect:+'
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     compile 'com.wrapp.floatlabelededittext:library:0.0.6'
     compile 'com.android.support:cardview-v7:25.1.0'

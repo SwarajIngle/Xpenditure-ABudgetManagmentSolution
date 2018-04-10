@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
@@ -137,6 +138,16 @@ public class MonthFragment extends Fragment {
         BarData data = new BarData(set1);
 
         data.setBarWidth(Barwidth);
+        horizontalBarChart.getLegend().setEnabled(false);
+        horizontalBarChart.setClickable(false);
+        horizontalBarChart.setDoubleTapToZoomEnabled(false);
+        horizontalBarChart.setPinchZoom(true);
+        horizontalBarChart.valuesToHighlight();
+        horizontalBarChart.enableScroll();
+        horizontalBarChart.getContentDescription();
+        horizontalBarChart.animateY(3000, Easing.EasingOption.EaseInCubic);
+        horizontalBarChart.setDrawGridBackground(false);
+
         horizontalBarChart.setData(data);
 
     }
