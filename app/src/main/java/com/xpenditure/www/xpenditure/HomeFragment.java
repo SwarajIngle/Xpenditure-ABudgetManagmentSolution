@@ -84,149 +84,150 @@ public class HomeFragment extends Fragment {
         mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
-                    @Override
-                    public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                        FirebaseUser user = firebaseAuth.getCurrentUser();
-                        if (user != null) {
-                            // User is signed in
-                            Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                            pieChart.setUsePercentValues(true);
-                            pieChart.getDescription().setEnabled(false);
-                            pieChart.setExtraOffsets(5, 10, 5, 5);
-                            pieChart.getLegend().setEnabled(false);
-                            pieChart.setDragDecelerationFrictionCoef(0.95f);
-                            pieChart.setDrawHoleEnabled(true);
-                            pieChart.setHoleRadius(25f);
-                            pieChart.setHoleColor(Color.WHITE);
-                            pieChart.setTransparentCircleRadius(50f);
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    pieChart.setUsePercentValues(true);
+                    pieChart.getDescription().setEnabled(false);
+                    pieChart.setExtraOffsets(5, 10, 5, 5);
+                    pieChart.getLegend().setEnabled(false);
+                    pieChart.setDragDecelerationFrictionCoef(0.95f);
+                    pieChart.setDrawHoleEnabled(true);
+                    pieChart.setHoleRadius(25f);
+                    pieChart.setHoleColor(Color.WHITE);
+                    pieChart.setTransparentCircleRadius(50f);
 
-                            user = FirebaseAuth.getInstance().getCurrentUser();
-                            String uid = user.getUid();
-                            firebase = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid);
+                    user = FirebaseAuth.getInstance().getCurrentUser();
+                    String uid = user.getUid();
+                    firebase = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid);
 
-                            firebase.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    Map<Integer, Integer> map = dataSnapshot.getValue(Map.class);
-//                                    int countCat = map.get("Category Count");
+                    firebase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            Map<Integer, Integer> map = dataSnapshot.getValue(Map.class);
+                            int countCat = map.get("Category Count");
 
-//                                    Log.v("E_VALUE", "Category Count " + countCat);
 
-//                                    CountManager.getCountCategories(countCat);
+                            Log.v("E_VALUE", "Category Count " + countCat);
 
+                            CountManager.getCountCategories(countCat);
+
+                        }
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+                    Map<String, String> map = new Map<String, String>() {
+                        @Override
+                        public int size() {
+                            return 0;
+                        }
+
+                        @Override
+                        public boolean isEmpty() {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean containsKey(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public boolean containsValue(Object o) {
+                            return false;
+                        }
+
+                        @Override
+                        public String get(Object o) {
+                            return null;
+                        }
+
+                        @Override
+                        public String put(String s, String s2) {
+                            return null;
+                        }
+
+                        @Override
+                        public String remove(Object o) {
+                            return null;
+                        }
+
+                        @Override
+                        public void putAll(Map<? extends String, ? extends String> map) {
+
+                        }
+
+                        @Override
+                        public void clear() {
+
+                        }
+
+                        @NonNull
+                        @Override
+                        public Set<String> keySet() {
+                            return null;
+                        }
+
+                        @NonNull
+                        @Override
+                        public Collection<String> values() {
+                            return null;
+                        }
+
+                        @NonNull
+                        @Override
+                        public Set<Entry<String, String>> entrySet() {
+                            return null;
+                        }
+                    };
+
+                    int categoryCount = countCategory();
+                    final ArrayList<PieEntry> yValues = new ArrayList<>();
+                    for (int i = 0; i < categoryCount; i++) {
+                        mrefcategory = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Category/Category" + i);
+                        mrefcategory.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                // This method is called once with the initial value and again
+                                // whenever data at this location is updated.
+
+                                Map<String, String> map = dataSnapshot.getValue(Map.class);
+                                String Title = map.get("Title");
+                                if (Title == null) {
+
+                                } else {
+                                    yValues.add(new PieEntry(15f, Title));
+                                    Log.d(TAG, "Title is: " + Title);
+                                    pieChart.animateY(5000, Easing.EasingOption.EaseInOutBack);
+//                        pieChart.animateX(5000, Easing.EasingOption.EaseInBounce);
+
+                                    PieDataSet dataSet = new PieDataSet(yValues, "Titles");
+                                    dataSet.setSliceSpace(3f);
+                                    dataSet.setSelectionShift(15f);
+                                    dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+                                    PieData data = new PieData((dataSet));
+                                    data.setValueTextSize(10f);
+                                    data.setValueTextColor(Color.WHITE);
+
+                                    pieChart.setData(data);
                                 }
+                            }
 
-                                @Override
-                                public void onCancelled(FirebaseError firebaseError) {
+                            @Override
+                            public void onCancelled(FirebaseError firebaseError) {
 
-                                }
-                            });
-                            Map<String, String> map = new Map<String, String>() {
-                                @Override
-                                public int size() {
-                                    return 0;
-                                }
-
-                                @Override
-                                public boolean isEmpty() {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean containsKey(Object o) {
-                                    return false;
-                                }
-
-                                @Override
-                                public boolean containsValue(Object o) {
-                                    return false;
-                                }
-
-                                @Override
-                                public String get(Object o) {
-                                    return null;
-                                }
-
-                                @Override
-                                public String put(String s, String s2) {
-                                    return null;
-                                }
-
-                                @Override
-                                public String remove(Object o) {
-                                    return null;
-                                }
-
-                                @Override
-                                public void putAll(Map<? extends String, ? extends String> map) {
-
-                                }
-
-                                @Override
-                                public void clear() {
-
-                                }
-
-                                @NonNull
-                                @Override
-                                public Set<String> keySet() {
-                                    return null;
-                                }
-
-                                @NonNull
-                                @Override
-                                public Collection<String> values() {
-                                    return null;
-                                }
-
-                                @NonNull
-                                @Override
-                                public Set<Entry<String, String>> entrySet() {
-                                    return null;
-                                }
-                            };
-
-//                            int categoryCount = countCategory();
-                            final ArrayList<PieEntry> yValues = new ArrayList<>();
-//                            for (int i = 0; i < categoryCount; i++) {
-                                mrefcategory = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Category");
-                                mrefcategory.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // This method is called once with the initial value and again
-                                        // whenever data at this location is updated.
-
-                                        Map<String, String> map = dataSnapshot.getValue(Map.class);
-                                        String Title = map.get("Title");
-                                        if (Title == null) {
-
-                                        } else {
-                                            yValues.add(new PieEntry(15f, Title));
-                                            Log.d(TAG, "Title is: " + Title);
-                                            pieChart.animateY(5000, Easing.EasingOption.EaseInOutBack);
-//                                          pieChart.animateX(5000, Easing.EasingOption.EaseInBounce);
-
-                                            PieDataSet dataSet = new PieDataSet(yValues, "Titles");
-                                            dataSet.setSliceSpace(3f);
-                                            dataSet.setSelectionShift(15f);
-                                            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-
-                                            PieData data = new PieData((dataSet));
-                                            data.setValueTextSize(10f);
-                                            data.setValueTextColor(Color.WHITE);
-
-                                            pieChart.setData(data);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(FirebaseError firebaseError) {
-
-                                    }
-                                });
+                            }
+                        });
 
 
-//                            }
+                    }
 
 //        yValues.add(new PieEntry(15f, "Category2"));
 //        Log.v("E_VALUE", "Title: " + yValues);
@@ -240,76 +241,77 @@ public class HomeFragment extends Fragment {
 //        Log.v("E_VALUE", "Title: " + yValues);
 
 
-                            mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Total");
+                    mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Total");
 
-                            mref.addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(DataSnapshot dataSnapshot) {
-                                    total_money = dataSnapshot.getValue(Integer.class);
+                    mref.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            total_money = dataSnapshot.getValue(Integer.class);
 
-                                    money = (TextView) rootView.findViewById(R.id.money);
-                                    money.setText("Rs. " + total_money.toString());
-
-                                }
-
-                                @Override
-                                public void onCancelled(FirebaseError firebaseError) {
-
-                                }
-                            });
-
-
-                            addMoney.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    AddMoneyFragment addMoneyFragment = new AddMoneyFragment();
-                                    FragmentManager fragmentManager = getFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.frameLayout, addMoneyFragment);
-
-                                    fragmentTransaction.commit();
-
-                                }
-                            });
-
-                            removeMoney.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View v) {
-                                    RemoveMoneyFragment removeMoneyFragment = new RemoveMoneyFragment();
-                                    FragmentManager fragmentManager = getFragmentManager();
-                                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                                    fragmentTransaction.replace(R.id.frameLayout, removeMoneyFragment);
-
-                                    fragmentTransaction.commit();
-
-                                }
-                            });
-
-                        } else {
-                            // User is signed out
-                            Log.d(TAG, "onAuthStateChanged:signed_out");
-                            LoginFragment loginFragment = new LoginFragment();
-                            FragmentManager fragmentManager = getFragmentManager();
-                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                            fragmentTransaction.replace(R.id.frameLayout, loginFragment);
-                            fragmentTransaction.commit();
-                            ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Login");
+                            money = (TextView) rootView.findViewById(R.id.money);
+                            money.setText("Rs. " + total_money.toString());
 
                         }
-                        // ...
-                    }
-                };
+
+                        @Override
+                        public void onCancelled(FirebaseError firebaseError) {
+
+                        }
+                    });
+
+
+                    addMoney.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            AddMoneyFragment addMoneyFragment = new AddMoneyFragment();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.frameLayout, addMoneyFragment);
+
+                            fragmentTransaction.commit();
+
+                        }
+                    });
+
+                    removeMoney.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            RemoveMoneyFragment removeMoneyFragment = new RemoveMoneyFragment();
+                            FragmentManager fragmentManager = getFragmentManager();
+                            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                            fragmentTransaction.replace(R.id.frameLayout, removeMoneyFragment);
+
+                            fragmentTransaction.commit();
+
+                        }
+                    });
+
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    LoginFragment loginFragment = new LoginFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, loginFragment);
+//                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Login");
+
+                }
+                // ...
+            }
+        };
 
 
         return rootView;
     }
 
-//    private int countCategory() {
-//        int countCategories = CountManager.returnCategoryCount();
-//
-//        Log.v("E_VALUE", "countCategories" + countCategories);
-//        return countCategories;
-//    }
+    private int countCategory() {
+        int countCategories = CountManager.returnCategoryCount();
+
+        Log.v("E_VALUE", "countCategories" + countCategories);
+        return countCategories;
+    }
 
 
     @Override

@@ -33,12 +33,7 @@
             android:icon="@drawable/ic_done"
             >
         </item>
-        <item
-            android:id="@+id/calender"
-            android:title="Calender"
-            android:icon="@drawable/ic_assessment"
-            >
-        </item>
+
         <item
             android:id="@+id/reminder"
             android:title="Reminder"
@@ -51,12 +46,7 @@
             android:icon="@drawable/ic_person"
             >
         </item>
-        <item
-            android:id="@+id/settings"
-            android:title="Settings"
-            android:icon="@drawable/ic_settings"
-            >
-        </item>
+
 
 
 

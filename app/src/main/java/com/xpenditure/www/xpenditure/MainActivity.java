@@ -17,8 +17,6 @@ import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.appindexing.Thing;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import static com.xpenditure.www.xpenditure.R.id.calender;
-
 public class MainActivity extends AppCompatActivity {
 
     DrawerLayout drawerLayout;
@@ -96,14 +94,7 @@ public class MainActivity extends AppCompatActivity {
                         item.setChecked(true);
                         drawerLayout.closeDrawers();
                         break;
-                    case calender:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout, new CalenderFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Calender");
-                        item.setChecked(true);
-                        drawerLayout.closeDrawers();
-                        break;
+
                     case R.id.reminder:
 
                         startActivity(new Intent(MainActivity.this, ReminderFragment.class));
@@ -117,14 +108,7 @@ public class MainActivity extends AppCompatActivity {
                         item.setChecked(true);
                         drawerLayout.closeDrawers();
                         break;
-                    case R.id.settings:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout, new SettingFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Settings");
-                        item.setChecked(true);
-                        drawerLayout.closeDrawers();
-                        break;
+
                 }
 
 
