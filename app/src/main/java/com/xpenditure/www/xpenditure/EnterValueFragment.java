@@ -26,7 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EnterValueFragment extends Fragment {
     TextView Cat_name;
@@ -202,13 +207,21 @@ public class EnterValueFragment extends Fragment {
     }
 
     public void rejkrdg(){
-        mrefcategorytitle = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Category/" + title + "/" + Year + "/" + Month);
+        mrefcategorytitle = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Category/" + title);
         mrefcategorytitle.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
-                 String kuchto = dataSnapshot.getValue().toString();
-                Log.d("E_VALUE", "kuchto" + kuchto);
+                Log.d("EXPENSE1", dataSnapshot.getKey());
+                for(DataSnapshot year : dataSnapshot.getChildren()) {
+                    Log.d("EXPENSE1", year.getKey());
+                    for(DataSnapshot month: year.getChildren()){
+                        for(DataSnapshot expense: month.getChildren()){
+                            Map<String, String> expenses = month.getValue(Map.class);
+                            Log.d("EXPENSE1", expenses.get("note"));
+                            Log.d("EXPENSE1", expenses.get("entered"));
+                        }
+                    }
+                }
 
             }
 

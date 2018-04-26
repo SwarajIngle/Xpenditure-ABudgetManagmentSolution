@@ -144,7 +144,7 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //        String mobile= editTextMobile.getText().toString().trim();
 
 
-        if (TextUtils.isEmpty(email)|| Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+        if (TextUtils.isEmpty(email)) {
             //eamil is empty
             Toast.makeText(this.getActivity(), "Please enter correct Email!", Toast.LENGTH_SHORT).show();
             return;

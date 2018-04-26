@@ -190,40 +190,40 @@ public class HomeFragment extends Fragment {
                             final ArrayList<PieEntry> yValues = new ArrayList<>();
 //                            for (int i = 0; i < categoryCount; i++) {
                                 mrefcategory = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Category");
-                                mrefcategory.addValueEventListener(new ValueEventListener() {
-                                    @Override
-                                    public void onDataChange(DataSnapshot dataSnapshot) {
-                                        // This method is called once with the initial value and again
-                                        // whenever data at this location is updated.
-
-                                        Map<String, String> map = dataSnapshot.getValue(Map.class);
-                                        String Title = map.get("Title");
-                                        if (Title == null) {
-
-                                        } else {
-                                            yValues.add(new PieEntry(15f, Title));
-                                            Log.d(TAG, "Title is: " + Title);
-                                            pieChart.animateY(5000, Easing.EasingOption.EaseInOutBack);
-//                                          pieChart.animateX(5000, Easing.EasingOption.EaseInBounce);
-
-                                            PieDataSet dataSet = new PieDataSet(yValues, "Titles");
-                                            dataSet.setSliceSpace(3f);
-                                            dataSet.setSelectionShift(15f);
-                                            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-
-                                            PieData data = new PieData((dataSet));
-                                            data.setValueTextSize(10f);
-                                            data.setValueTextColor(Color.WHITE);
-
-                                            pieChart.setData(data);
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(FirebaseError firebaseError) {
-
-                                    }
-                                });
+//                                mrefcategory.addValueEventListener(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                                        // This method is called once with the initial value and again
+//                                        // whenever data at this location is updated.
+//
+//                                        Map<String, String> map = dataSnapshot.getValue(Map.class);
+//                                        String Title = map.get("Title");
+//                                        if (Title == null) {
+//
+//                                        } else {
+//                                            yValues.add(new PieEntry(15f, Title));
+//                                            Log.d(TAG, "Title is: " + Title);
+//                                            pieChart.animateY(5000, Easing.EasingOption.EaseInOutBack);
+////                                          pieChart.animateX(5000, Easing.EasingOption.EaseInBounce);
+//
+//                                            PieDataSet dataSet = new PieDataSet(yValues, "Titles");
+//                                            dataSet.setSliceSpace(3f);
+//                                            dataSet.setSelectionShift(15f);
+//                                            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+//
+//                                            PieData data = new PieData((dataSet));
+//                                            data.setValueTextSize(10f);
+//                                            data.setValueTextColor(Color.WHITE);
+//
+//                                            pieChart.setData(data);
+//                                        }
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(FirebaseError firebaseError) {
+//
+//                                    }
+//                                });
 
 
 //                            }
