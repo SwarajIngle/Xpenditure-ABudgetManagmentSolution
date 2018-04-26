@@ -14,6 +14,7 @@ public class CountManager {
 
     FirebaseAuth mAuth;
     FirebaseDatabase mDatabase;
+
     private FirebaseAuth.AuthStateListener mAuthListener;
     Firebase firebase;
     DatabaseReference databaseReferance;
@@ -23,7 +24,8 @@ public class CountManager {
 
 
     public static int countCategories;
-    public static int countExpenses;
+    public static int countMExpenses;
+    public static int countYExpenses;
 
     CountManager() {
 
@@ -54,7 +56,6 @@ public class CountManager {
     public void setCountExpenses(int countExpenses) {
 
     }
-
 
 
 

@@ -76,7 +76,7 @@ public class MonthFragment extends Fragment {
                 month = month + 1;
                 String NameOfMonth = "";
                 switch (month) {
-                    
+
                     case  1:
                         NameOfMonth = "January";
                         break;
@@ -151,5 +151,6 @@ public class MonthFragment extends Fragment {
         horizontalBarChart.setData(data);
 
     }
+
 
 }

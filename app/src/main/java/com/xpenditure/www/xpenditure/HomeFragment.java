@@ -108,11 +108,11 @@ public class HomeFragment extends Fragment {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     Map<Integer, Integer> map = dataSnapshot.getValue(Map.class);
-                                    int countCat = map.get("Category Count");
+//                                    int countCat = map.get("Category Count");
 
-                                    Log.v("E_VALUE", "Category Count " + countCat);
+//                                    Log.v("E_VALUE", "Category Count " + countCat);
 
-                                    CountManager.getCountCategories(countCat);
+//                                    CountManager.getCountCategories(countCat);
 
                                 }
 
@@ -186,10 +186,10 @@ public class HomeFragment extends Fragment {
                                 }
                             };
 
-                            int categoryCount = countCategory();
+//                            int categoryCount = countCategory();
                             final ArrayList<PieEntry> yValues = new ArrayList<>();
-                            for (int i = 0; i < categoryCount; i++) {
-                                mrefcategory = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Category/Category"+i);
+//                            for (int i = 0; i < categoryCount; i++) {
+                                mrefcategory = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Category");
                                 mrefcategory.addValueEventListener(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -226,7 +226,7 @@ public class HomeFragment extends Fragment {
                                 });
 
 
-                            }
+//                            }
 
 //        yValues.add(new PieEntry(15f, "Category2"));
 //        Log.v("E_VALUE", "Title: " + yValues);
@@ -242,7 +242,7 @@ public class HomeFragment extends Fragment {
 
                             mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Total");
 
-                            mref.addValueEventListener(new ValueEventListener() {
+                            mref.addListenerForSingleValueEvent(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(DataSnapshot dataSnapshot) {
                                     total_money = dataSnapshot.getValue(Integer.class);
@@ -304,12 +304,12 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-    private int countCategory() {
-        int countCategories = CountManager.returnCategoryCount();
-
-        Log.v("E_VALUE", "countCategories" + countCategories);
-        return countCategories;
-    }
+//    private int countCategory() {
+//        int countCategories = CountManager.returnCategoryCount();
+//
+//        Log.v("E_VALUE", "countCategories" + countCategories);
+//        return countCategories;
+//    }
 
 
     @Override

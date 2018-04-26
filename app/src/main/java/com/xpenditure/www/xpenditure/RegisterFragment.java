@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,9 +144,9 @@ public class RegisterFragment extends Fragment implements View.OnClickListener {
 //        String mobile= editTextMobile.getText().toString().trim();
 
 
-        if (TextUtils.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)|| Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             //eamil is empty
-            Toast.makeText(this.getActivity(), "Please enter Email!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this.getActivity(), "Please enter correct Email!", Toast.LENGTH_SHORT).show();
             return;
         }
         if (TextUtils.isEmpty(password)) {

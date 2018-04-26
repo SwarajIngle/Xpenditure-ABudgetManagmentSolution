@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,15 +61,21 @@ public class GoalsFragment extends Fragment {
             public void onClick(View view) {
                 String goalsAmt = goalsEditText.getText().toString();
                 Integer goals = Integer.parseInt(goalsAmt);
+                if (TextUtils.isEmpty(goalsAmt)) {
+                    //eamil is empty
+                    Toast.makeText(GoalsFragment.this.getActivity(), " Enter Goal Amount! ", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 mref.setValue(goals);
-                Toast.makeText(GoalsFragment.this.getActivity(), "Goals Updated", Toast.LENGTH_SHORT).show();
+                Toast.makeText(GoalsFragment.this.getActivity(), " Goals Updated! ", Toast.LENGTH_SHORT).show();
                 transaction();
             }
         });
         return rootView;    }
 
     private void transaction() {
+
 
         DisplayGoalsFragment diaplaygoals = new DisplayGoalsFragment();
         FragmentManager fragmentManager = getFragmentManager();
