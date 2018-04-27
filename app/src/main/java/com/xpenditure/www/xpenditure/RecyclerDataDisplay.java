@@ -75,9 +75,11 @@ public class RecyclerDataDisplay extends Fragment {
 //        Log.v("E_VALUE", "Categories for bar : " + catCount);
             RecyclerView displayData = (RecyclerView) rootView.findViewById(R.id.recyclerViewMonth);
             displayData.setHasFixedSize(true);
-            displayData.setLayoutManager(new LinearLayoutManager(RecyclerDataDisplay.this.getActivity()));
+            final LinearLayoutManager layoutManager = new LinearLayoutManager(RecyclerDataDisplay.this.getActivity());
+            layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+            displayData.setLayoutManager(layoutManager);
 
-       dataref = FirebaseDatabase.getInstance().getReference().child("users/" + uid + "/Category/Category0" + "/" + Year + "/" + Month );
+       dataref = FirebaseDatabase.getInstance().getReference().child("users/" + uid + "/Category/Category0/2018/04" + "/");
 //        setData(catCount, 100);
 //            mdatepicker.setOnClickListener(new View.OnClickListener() {
 //                @Override
@@ -230,7 +232,10 @@ public class RecyclerDataDisplay extends Fragment {
                             viewHolder.setEntered(model.getEntered());
                         }
                     };
-            displayData.setAdapter(firebaseRecyclerAdapter);
+            try {
+                displayData.setAdapter(firebaseRecyclerAdapter);
+            }catch(Exception e){
+            }
         }
         public static class DisplayDataViewHolder extends RecyclerView.ViewHolder{
             View Myview;

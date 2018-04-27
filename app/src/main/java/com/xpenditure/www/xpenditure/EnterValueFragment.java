@@ -123,10 +123,6 @@ public class EnterValueFragment extends Fragment {
                             Toast.makeText(EnterValueFragment.this.getActivity(), "Please Check Goals", Toast.LENGTH_SHORT).show();
 
                         }
-
-
-
-
                     }
 
                     @Override
