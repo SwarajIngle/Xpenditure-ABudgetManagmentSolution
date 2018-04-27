@@ -62,22 +62,15 @@ public class MainActivity extends AppCompatActivity {
                         drawerLayout.closeDrawers();
                         break;
 
-                    case R.id.month:
+                    case R.id.Assessment:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frameLayout, new MonthFragment());
                         fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Monthly");
+                        getSupportActionBar().setTitle("Assessment");
                         item.setChecked(true);
                         drawerLayout.closeDrawers();
                         break;
-                    case R.id.year:
-                        fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                        fragmentTransaction.replace(R.id.frameLayout, new YearFragment());
-                        fragmentTransaction.commit();
-                        getSupportActionBar().setTitle("Yearly");
-                        item.setChecked(true);
-                        drawerLayout.closeDrawers();
-                        break;
+
                     case R.id.categories:
                         fragmentTransaction = getSupportFragmentManager().beginTransaction();
                         fragmentTransaction.replace(R.id.frameLayout, new CategoriesFragment());

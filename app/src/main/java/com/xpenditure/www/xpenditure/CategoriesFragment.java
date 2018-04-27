@@ -105,7 +105,8 @@ public class CategoriesFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         databaseReferance = FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/Category");
-        FirebaseRecyclerAdapter<CategoriesRecycler ,CategoriesRecyclerViewHolder > adapter= new FirebaseRecyclerAdapter<CategoriesRecycler, CategoriesRecyclerViewHolder>(
+        FirebaseRecyclerAdapter<CategoriesRecycler ,CategoriesRecyclerViewHolder >
+                adapter= new FirebaseRecyclerAdapter<CategoriesRecycler, CategoriesRecyclerViewHolder>(
                 CategoriesRecycler.class,
                 R.layout.category_cards,
                 CategoriesRecyclerViewHolder.class,

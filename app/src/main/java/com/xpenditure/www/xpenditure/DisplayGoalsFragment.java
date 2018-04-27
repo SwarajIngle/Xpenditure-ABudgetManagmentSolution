@@ -27,7 +27,9 @@ public class DisplayGoalsFragment extends Fragment {
     TextView displaygoals;
     Button updateGoals;
     Firebase mref;
+    Firebase mrefTotal;
     Integer goalsdisplay;
+    Integer Total;
 
 
     public DisplayGoalsFragment() {
@@ -50,6 +52,20 @@ public class DisplayGoalsFragment extends Fragment {
         String uid = user.getUid();
 
         mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Goals");
+        mrefTotal = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/"+uid+"/Total");
+
+        mrefTotal.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                Total= dataSnapshot.getValue(Integer.class);
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
 
         mref.addValueEventListener(new ValueEventListener() {
             @Override
@@ -57,6 +73,10 @@ public class DisplayGoalsFragment extends Fragment {
                 goalsdisplay = dataSnapshot.getValue(Integer.class);
 
                 displaygoals.setText("Rs. " + goalsdisplay.toString());
+
+
+
+
 
             }
 

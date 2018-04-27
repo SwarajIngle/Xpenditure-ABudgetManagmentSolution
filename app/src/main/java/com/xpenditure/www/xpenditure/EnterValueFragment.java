@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -27,7 +25,6 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Map;
 
 public class EnterValueFragment extends Fragment {
     TextView Cat_name;
@@ -52,6 +49,7 @@ public class EnterValueFragment extends Fragment {
     Firebase exp_Reference_Year;
     Button Spent;
     Integer total;
+    Integer goalDisplay;
     String Date;
     String time;
     String Day;
@@ -110,10 +108,32 @@ public class EnterValueFragment extends Fragment {
         Spent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+              Firebase  mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Goals");
+
                 Entered = Value_edit.getText().toString().trim();
                 Value = Integer.parseInt(Entered);
                 note = Notes.getText().toString().trim();
                 total = total - Value;
+                mref.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        int goalsdisplay = dataSnapshot.getValue(Integer.class);
+
+                        if(total<goalsdisplay){
+                            Toast.makeText(EnterValueFragment.this.getActivity(), "Please Check Goals", Toast.LENGTH_SHORT).show();
+
+                        }
+
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(FirebaseError firebaseError) {
+
+                    }
+                });
                 if (TextUtils.isEmpty(note)) {
                     //eamil is empty
                     Toast.makeText(EnterValueFragment.this.getActivity(), "Please enter Note", Toast.LENGTH_SHORT).show();
@@ -164,7 +184,7 @@ public class EnterValueFragment extends Fragment {
                         final DatabaseReference year_Reference = FirebaseDatabase.getInstance().getReference().child("users/" + uid + "/Category/" + title + "/" + Year);
                         DatabaseReference entry_month = year_Reference.child(Month);
                         entry_month.child(Month);
-                        entry_month.child("MonthExpenseTotal").setValue(0);
+//                        entry_month.child("MonthExpenseTotal").setValue(0);
 
                         DatabaseReference month_Reference = FirebaseDatabase.getInstance().getReference().child("users/" + uid + "/Category/" + title + "/" + Year + "/" + Month);
 //                        DatabaseReference entry_expnode = month_Reference.child("Expense1");
@@ -205,49 +225,45 @@ public class EnterValueFragment extends Fragment {
     }
 
     public void rejkrdg() {
-        mrefcategorytitle = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Category/" + title + "/" + Year + "/" + Month);
-        mrefcategorytitle = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Category/" + title);
-        mrefcategorytitle.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//        mrefcategorytitle = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Category/" + title);
+//        mrefcategorytitle.addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+//                Log.d("EXPENSE1", dataSnapshot.getKey());
+//                for(DataSnapshot year : dataSnapshot.getChildren()) {
+//                    Log.d("EXPENSE2", year.getKey());
+//                    for(DataSnapshot month: year.getChildren()){
+//                        for(DataSnapshot expense: month.getChildren()){
+//                            Map<String, String> expenses = month.getValue(Map.class);
+//                            Log.d("EXPENSE3", expenses.get("note"));
+//                            Log.d("EXPENSE3", expenses.get("entered"));
+//                        }
+//                    }
+//                }
+//
+//            }
+//
+//            @Override
+//            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(FirebaseError firebaseError) {
+//
+//            }
+//        });
 
-                String kuchto = dataSnapshot.getValue().toString();
-//                Log.d("E_VALUE", "kuchto" + kuchto);
-                Log.d("EXPENSEYear", dataSnapshot.getKey());
-                for (DataSnapshot year : dataSnapshot.getChildren()) {
-                    Log.d("EXPENSEMonth", year.getKey());
-                    for (DataSnapshot month : year.getChildren()) {
-                        for (DataSnapshot expense : month.getChildren()) {
-                            Map<String, String> expenses = month.getValue(Map.class);
-                            Log.d("EXPENSENote", expenses.get("note"));
-                            Log.d("EXPENSEAmount", expenses.get("entered"));
-                            Log.d("EXPENSEDay", expenses.get("Day"));
-                        }
-                    }
-                }
-
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-
-            }
-        });
 
     }
 }

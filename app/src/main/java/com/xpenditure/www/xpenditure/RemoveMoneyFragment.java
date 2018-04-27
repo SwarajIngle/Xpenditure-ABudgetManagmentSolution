@@ -56,6 +56,7 @@ public class RemoveMoneyFragment extends Fragment {
 //        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
 
+
         mAuth = FirebaseAuth.getInstance();
 
 

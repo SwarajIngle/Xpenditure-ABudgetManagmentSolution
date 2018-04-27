@@ -49,9 +49,11 @@ public class HomeFragment extends Fragment {
     private Button addMoney;
     private Button removeMoney;
     Firebase mref;
+    Firebase mrefGoals;
     Firebase firebase;
     Firebase mrefcategory;
     Integer total_money;
+    Integer Goals=0;
     TextView money;
     Toolbar toolbar;
     DatabaseReference databaseReference;
@@ -243,6 +245,7 @@ public class HomeFragment extends Fragment {
 
                     mref = new Firebase("https://xpenditure-7d2a5.firebaseio.com/users/" + uid + "/Total");
 
+
                     mref.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
@@ -251,6 +254,8 @@ public class HomeFragment extends Fragment {
                             money = (TextView) rootView.findViewById(R.id.money);
                             money.setText("Rs. " + total_money.toString());
 
+
+
                         }
 
                         @Override
@@ -258,6 +263,8 @@ public class HomeFragment extends Fragment {
 
                         }
                     });
+
+
 
 
                     addMoney.setOnClickListener(new View.OnClickListener() {
@@ -299,11 +306,15 @@ public class HomeFragment extends Fragment {
 
                 }
                 // ...
+
             }
         };
 
 
-        return rootView;
+
+
+
+            return rootView;
     }
 
     private int countCategory() {

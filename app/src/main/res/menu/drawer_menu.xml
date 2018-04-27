@@ -10,17 +10,12 @@
         </item>
 
         <item
-            android:id="@+id/month"
-            android:title="Monthly"
+            android:id="@+id/Assessment"
+            android:title="Assessment"
             android:icon="@drawable/ic_assessment"
             >
         </item>
-        <item
-            android:id="@+id/year"
-            android:title="Yearly"
-            android:icon="@drawable/ic_assessment"
-            >
-        </item>
+
         <item
             android:id="@+id/categories"
             android:title="Categories"

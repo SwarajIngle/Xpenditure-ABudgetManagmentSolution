@@ -1,26 +1,29 @@
 package com.xpenditure.www.xpenditure;
 
 
-import android.app.DatePickerDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.DatePicker;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.animation.Easing;
-import com.github.mikephil.charting.charts.HorizontalBarChart;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
-import com.github.mikephil.charting.data.BarEntry;
+import com.firebase.client.Firebase;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-import java.util.Calendar;
+import static android.content.ContentValues.TAG;
 
 
 /**
@@ -28,9 +31,14 @@ import java.util.Calendar;
  */
 public class MonthFragment extends Fragment {
 
-    HorizontalBarChart horizontalBarChart;
-    TextView mdatepicker;
-    DatePickerDialog.OnDateSetListener onDateSetListener;
+    Firebase firebase;
+    private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
+    FirebaseAuth mAuth;
+    FirebaseAuth.AuthStateListener mAuthListener;
+    Toolbar toolbar;
+    public RecyclerView recyclerView;
+
+    DatabaseReference databaseReferance;
 
     public MonthFragment() {
         // Required empty public constructor
@@ -43,114 +51,114 @@ public class MonthFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_month, container, false);
         //code idhar
+        toolbar = (Toolbar) rootView.findViewById(R.id.toolbar);
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView) ;
+//        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
 
-        horizontalBarChart = (HorizontalBarChart) rootView.findViewById(R.id.barChart);
-        mdatepicker = (TextView) rootView.findViewById(R.id.datePicker);
-        Integer catCount = CountManager.returnCategoryCount();
-        Log.v("E_VALUE", "Categories for bar : " + catCount);
 
-        setData(catCount, 100);
+        mAuth = FirebaseAuth.getInstance();
 
-        mdatepicker.setOnClickListener(new View.OnClickListener() {
+
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
-            public void onClick(View view) {
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    // User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                } else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                    LoginFragment loginFragment = new LoginFragment();
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                    fragmentTransaction.replace(R.id.frameLayout, loginFragment);
+                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.commit();
+                    ((AppCompatActivity) getActivity()).getSupportActionBar().setTitle("Login");
 
-                DatePickerDialog dialog = new DatePickerDialog(MonthFragment.this.getActivity(),
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        onDateSetListener,
-                        year, month, day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-
-            }
-        });
-
-        onDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-
-            public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                month = month + 1;
-                String NameOfMonth = "";
-                switch (month) {
-
-                    case  1:
-                        NameOfMonth = "January";
-                        break;
-                    case  2:
-                        NameOfMonth = "Febauary";
-                        break;
-                    case  3:
-                        NameOfMonth = "March";
-                        break;
-                    case  4:
-                        NameOfMonth = "April";
-                        break;
-                    case  5:
-                        NameOfMonth = "May";
-                        break;
-                    case  6:
-                        NameOfMonth = "June";
-                        break;
-                    case  7:
-                        NameOfMonth = "July";
-                        break;
-                    case  8:
-                        NameOfMonth = "August";
-                        break;
-                    case  9:
-                        NameOfMonth = "September";
-                        break;
-                    case  10:
-                        NameOfMonth = "October";
-                        break;
-                    case  11:
-                        NameOfMonth = "November";
-                        break;
-                    case  12:
-                        NameOfMonth = "December";
-                        break;
                 }
-
-                String date = NameOfMonth + " " + year;
-                mdatepicker.setText(date);
+                // ...
             }
         };
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        String uid = user.getUid();
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        databaseReferance = FirebaseDatabase.getInstance().getReference().child("/users/"+uid+"/Category");
+        FirebaseRecyclerAdapter<RemoveRecycler ,RemoveRecyclerViewHolder > adapter= new FirebaseRecyclerAdapter<RemoveRecycler, RemoveRecyclerViewHolder>(
+                RemoveRecycler.class,
+                R.layout.remove_cards,
+                RemoveRecyclerViewHolder.class,
+                databaseReferance
+        ) {
+            @Override
+            protected void populateViewHolder(RemoveRecyclerViewHolder viewHolder, RemoveRecycler model, int position) {
+                viewHolder.setTitle(model.getTitle());
+                final String pos_key = getRef(position).getKey();
+                viewHolder.CatTitle.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        FragmentManager fragmentManager = getFragmentManager();
+                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                        Bundle bundle = new Bundle();
+                        bundle.putString("title", pos_key);
+                        RecyclerDataDisplay displayData = new RecyclerDataDisplay();
+                        displayData.setArguments(bundle);
+                        fragmentTransaction.replace(R.id.frameLayout,displayData);
+                        fragmentTransaction.commit();
+                    }
+                });
+            }
+        };
+        recyclerView.setAdapter(adapter);
 
         return rootView;
     }
 
-    public void setData(int count, int range) {
-        ArrayList<BarEntry> yValue = new ArrayList<>();
-        float Barwidth = 9f;
-        float SpaceBar = 10f;
+    public static class RemoveRecyclerViewHolder extends RecyclerView.ViewHolder {
+        TextView CatTitle;
 
-        for (int i = 0; i < count; i++) {
-            float val = (float) (Math.random() * range);
-            yValue.add(new BarEntry(i * SpaceBar, val));
+        //ArrayList<RemoveRecycler> cat = new ArrayList<>();
+        //Context ctx;
+
+
+        public RemoveRecyclerViewHolder(View catgview) {
+            super(catgview);
+
+            CatTitle = (TextView) catgview.findViewById(R.id.categoryNameDisplay);
+
+
         }
-        BarDataSet set1;
 
-        set1 = new BarDataSet(yValue, "Data Set1");
-        BarData data = new BarData(set1);
 
-        data.setBarWidth(Barwidth);
-        horizontalBarChart.getLegend().setEnabled(false);
-        horizontalBarChart.setClickable(false);
-        horizontalBarChart.setDoubleTapToZoomEnabled(false);
-        horizontalBarChart.setPinchZoom(true);
-        horizontalBarChart.valuesToHighlight();
-        horizontalBarChart.enableScroll();
-        horizontalBarChart.getContentDescription();
-        horizontalBarChart.animateY(3000, Easing.EasingOption.EaseInCubic);
-        horizontalBarChart.setDrawGridBackground(false);
-
-        horizontalBarChart.setData(data);
+        public void setTitle(String title) {
+            CatTitle.setText(title);
+        }
 
     }
 
 
+
+
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        if (mAuthListener != null) {
+            mAuth.removeAuthStateListener(mAuthListener);
+        }
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        mAuth.addAuthStateListener(mAuthListener);
+    }
 }
+
+
+
+
